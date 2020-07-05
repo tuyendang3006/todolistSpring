@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+  <style>
+    
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+     
+    .row.content {height: 600px}
+   
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    .footer {
+	  position: fixed;
+	  width: 100%;
+	  height:30px;
+	  left: 0;
+  	  bottom: 0;
+	  background-color: black;
+	  color: white;
+	  text-align: center;
+  	}
+    
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    .container {
+        position: relative;
+        text-align: center;
+        color: black;
+    }
+    .centered {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+    
+    
+  </style>
+
+</head>
+
+<body>
+    
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/">ToDoList</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+     
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li class="active"><a href="/registerPage"><span class="glyphicon glyphicon-plus"></span> Register</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      
+    </div>
+    <div class="col-sm-8 container">   	     
+            <img src="image/bg-masthead.jpg" alt="" style="width:100%">
+            <div class="centered">
+                    <h3 class="mx-auto mb-5"><em>Welcome To TODOLIST Application!</em></h3>
+        			<h1 class="mb-5"><b>IT'S NICE TO MEET YOU</b></h1>
+        			<a class="btn btn-primary btn-xl js-scroll-trigger" href="login">Get Started</a>
+            </div>
+                    
+    </div>
+    <div class="col-sm-2 sidenav">
+      
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+ 
+</div>
+ 
+</body>
+
+</html>

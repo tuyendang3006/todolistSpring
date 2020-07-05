@@ -1,0 +1,176 @@
+<!doctype html>
+<html ng-app="todolist">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tasks</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+    <script src="js/todolist.js"></script>
+    <style>
+    
+      .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+      }
+      
+      .footer {
+	  position: fixed;
+	  width: 100%;
+	  height:30px;
+	  left: 0;
+  	  bottom: 0;
+	  background-color: black;
+	  color: white;
+	  text-align: center;
+  	}
+      .card {
+      background-color: rgb(250, 250, 250);
+      width:80%;
+      /* just in case there no content*/
+      padding: 20px 25px 30px;
+      margin: 0 auto 25px;
+      margin-top: 20px;
+      /* shadows and rounded borders */
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 1px;
+      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      }
+      
+    </style>
+</head>
+
+<body ng-controller="mainController">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="/">ToDoList</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Projects</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active">             	
+              		<a href="#"><span class="glyphicon glyphicon-user"></span> Hi {{user}}!</a>              	
+              </li>
+              <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+        
+      <div class="container-fluid">   
+            <div class="card">
+                <form>
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <div class="input-group  text-center">
+                                    <input type="text" class="form-control" placeholder="Write something to do" ng-model="formData.name" required>
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary" ng-click="createTodo()" ng-disabled="!formData.name">Add a to-do</button>
+                                    </span>
+                                </div>
+   
+                            </div>
+                    </div>
+              </form>  
+            </div> 
+            <div class="card">
+                
+                <div class="card-body">
+
+                  <h6 class="font-weight-bold">Number of tasks: {{tasks.length}}</h6>
+                  <div id="table" class="table-editable">
+                    <table class="table table-bordered table-responsive-md table-striped text-center">
+                      <tr>
+                        <th class="text-center">Done</th>
+                        <th class="text-center">Task Name</th>
+                        <th class="text-center">Edit</th>
+                        <th class="text-center">Delete</th>
+                      </tr>
+                      <tr class="bg-info" ng-repeat="x in tasks">
+                        <td>
+                            <span>
+                                <input type="checkbox" ng-model="x.done" ng-click="updateDone(x)" >
+                            </span>
+                        </td>
+                        <td>
+                          <span ng-show="x.done ==false">{{x.content}}</span>
+                          <span ng-show="x.done ==true"><strike>{{x.content}}</strike></span>
+      
+                        </td>
+                        <!--  
+                        <td>
+                            <span contenteditable="false" >date | date:'dd-MM-yyyy'</span> 
+                        </td>
+                        -->
+                        <td>
+                          <span >
+                                <button type="button" id="{{$index}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal" ng-click="openModal($index)">
+                                	<span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                          </span>
+                        </td>
+                        <td>
+                          <span class="table-remove">
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteTodo(x.id)">
+                            	<span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>        
+                  
+                </div>
+              </div>          
+        
+      </div>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    
+	      <div class="modal-header">
+	        <h3 class="modal-title" >Edit task
+	        <button type="button" class="close" data-dismiss="modal" ng-click="closeModal(tasks[modalIndex].content)" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        </h3>	        
+	      </div>
+	      
+	      <div class="modal-body">
+	        <input class="form-control" id="editInput" type="text" ng-value="tasks[modalIndex].content" ng-model="newContent">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeModal(tasks[modalIndex].content)">Close</button>
+	        <button type="button" class="btn btn-primary" ng-disabled="!newContent" ng-click="updateTodo(tasks[modalIndex].id)">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+     
+<div class="footer">
+</div>  
+      
+</body>
+
+</html>
+
+
+
